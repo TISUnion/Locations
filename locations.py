@@ -76,11 +76,11 @@ def add(server, info):
     for loc in locations:
         if args[2] == loc['name']:
             server.tell(info.player, '§c已存在同名的路标§r')
-            server.tell(info.player, locToStr(loc).decode('utf-8'))
+            server.tell(info.player, locToStr(loc).encode('utf-8'))
             return
     newLoc = {'name': args[2], 'pos': {'x': int(args[3]), 'y': int(args[4]), 'z': int(args[5])}, 'dim': int(args[6])}
     locations.append(newLoc)
-    server.say(info.player + ' 添加了路标 ' + locToStr(newLoc).decode('utf-8'))
+    server.say(info.player + ' 添加了路标 ' + locToStr(newLoc).encode('utf-8'))
     
 def addHere(server, info):
     pass
@@ -90,7 +90,7 @@ def delete(server, info):
     for loc in locations:
         if args[2] == loc['name']:
             locations.remove(loc)
-            server.say(info.player + ' 删除了路标 ' + locToStr(loc).decode('utf-8'))
+            server.say(info.player + ' 删除了路标 ' + locToStr(loc).encode('utf-8'))
             return
     server.tell(info.player, '§c找不到名称匹配的路标，请使用§r !!loc §c查看所有路标！§r')
 
@@ -100,7 +100,7 @@ def get(server, info):
     count = 0
     for loc in locations:
         if loc['name'].find(kwrd) > -1:
-            server.tell(info.player, highlight(locToStr(loc), kwrd).decode('utf-8'))
+            server.tell(info.player, highlight(locToStr(loc), kwrd).encode('utf-8'))
             count = count + 1
     if count == 0:
         server.tell(info.player, '§c找不到名称匹配的路标，请使用§r !!loc §c查看所有路标！§r')
