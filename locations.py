@@ -14,7 +14,7 @@ MC一般指令染色规则
 属性名称：§b，水色
 '''
 
-helpmsg = u'''---------MCD 路标插件---------
+helpmsg = '''---------MCD 路标插件---------
 命令帮助如下:
 !!loc help -显示帮助消息
 !!loc add <独特名字> <x> <y> <z> <地狱：-1，主世界：0，末地：1> - 加入一个路标
@@ -75,12 +75,12 @@ def add(server, info):
     args = unicode(info.content, encoding='utf-8').split(' ')
     for loc in locations:
         if args[2] == loc['name']:
-            server.tell(info.player, u'§c已存在同名的路标§r')
-            server.tell(info.player, locToStr(loc))
+            server.tell(info.player, '§c已存在同名的路标§r')
+            server.tell(info.player, locToStr(loc).decode('utf-8'))
             return
     newLoc = {'name': args[2], 'pos': {'x': int(args[3]), 'y': int(args[4]), 'z': int(args[5])}, 'dim': int(args[6])}
     locations.append(newLoc)
-    server.say(info.player + u' 添加了路标 ' + locToStr(newLoc))
+    server.say(info.player + ' 添加了路标 ' + locToStr(newLoc).decode('utf-8'))
     
 def addHere(server, info):
     pass
@@ -90,9 +90,9 @@ def delete(server, info):
     for loc in locations:
         if args[2] == loc['name']:
             locations.remove(loc)
-            server.say(info.player + u' 删除了路标 ' + locToStr(loc))
+            server.say(info.player + ' 删除了路标 ' + locToStr(loc).decode('utf-8'))
             return
-    server.tell(info.player, u'§c找不到名称匹配的路标，请使用§r !!loc §c查看所有路标！§r')
+    server.tell(info.player, '§c找不到名称匹配的路标，请使用§r !!loc §c查看所有路标！§r')
 
 def get(server, info):
     args = unicode(info.content, encoding='utf-8').split(' ')
@@ -100,12 +100,12 @@ def get(server, info):
     count = 0
     for loc in locations:
         if loc['name'].find(kwrd) > -1:
-            server.tell(info.player, highlight(locToStr(loc), kwrd))
+            server.tell(info.player, highlight(locToStr(loc), kwrd).decode('utf-8'))
             count = count + 1
     if count == 0:
-        server.tell(info.player, u'§c找不到名称匹配的路标，请使用§r !!loc §c查看所有路标！§r')
+        server.tell(info.player, '§c找不到名称匹配的路标，请使用§r !!loc §c查看所有路标！§r')
     else:
-        server.tell(info.player, u'共找到了 §a' + str(count) + u' 个匹配路标')
+        server.tell(info.player, '共找到了 §a' + str(count) + ' 个匹配路标')
 
 def getAll(server, info):
     count = 0
@@ -134,7 +134,7 @@ def onServerInfo(server, info):
         elif re.match("^!!loc\s*$",info.content):
           getAll(server, info)
         else:
-          server.tell(info.player, u'§c输入无效，使用§r !!loc help §c查看帮助信息§r')
+          server.tell(info.player, '§c输入无效，使用§r !!loc help §c查看帮助信息§r')
       except:
         lines = traceback.format_exc().splitlines()
         for l in lines:
