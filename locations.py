@@ -112,7 +112,7 @@ def getAll(server, info):
     for loc in locations:
         server.tell(info.player, locToStr(loc))
         count = count + 1
-    server.tell(info.player, u'共有 §a' + str(count) + u' 个路标')
+    server.tell(info.player, u'共有 §a' + unicode(str(count), encoding='utf-8') + u' 个路标')
 
 def onServerInfo(server, info):
   if info.isPlayer == 1:
