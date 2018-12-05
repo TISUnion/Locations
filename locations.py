@@ -28,17 +28,16 @@ tips:为方便搜索，可以加入别名，尽量使用全称，如“僵尸猪
 
 locations = []
 
-def onServerStartup(server):
-    try:
-        with codecs.open('locations.json', 'r', encoding='utf-8') as jfile:
-            locations = json.load(jfile)
-    except IOError:
-        with codecs.open('locations.json', 'w', encoding='utf-8') as jfile:
-            jfile.write('')
-    except:
-        lines = traceback.format_exc().splitlines()
-        for l in lines:
-            server.say(l)
+try:
+    with codecs.open('locations.json', 'r', encoding='utf-8') as jfile:
+        locations = json.load(jfile)
+except IOError:
+    with codecs.open('locations.json', 'w', encoding='utf-8') as jfile:
+        jfile.write('')
+except:
+    lines = traceback.format_exc().splitlines()
+    for l in lines:
+        server.say(l)
     
 
 dimName = {'0': u'主世界', '1': u'末地', '-1': u'地狱'}
