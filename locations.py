@@ -36,8 +36,8 @@ except IOError:
         jfile.write('')
 except:
     lines = traceback.format_exc().splitlines()
-        for l in lines:
-          server.say(l)
+    for l in lines:
+        server.say(l)
     
 
 dimName = {'0': u'主世界', '1': u'末地', '-1': u'地狱'}
