@@ -115,7 +115,7 @@ def get(server, info):
     for loc in locations:
         if loc['name'].find(kwrd) > -1:
             tellComplexed(server, info.player, [
-                {'text': highlight(loc['name'],kwrd)},
+                {'text': highlight(loc['name'],kwrd) + ' '},
                 jsonFormatPosition(loc),
                 {'text': u'§a' + dimName[str(loc['dim'])] + u'§r'}
                 ])
@@ -129,11 +129,10 @@ def getAll(server, info):
     count = 0
     for loc in locations:
         tellComplexed(server, info.player, [
-            {'text': loc['name']},
+            {'text': loc['name'] + ' '},
             jsonFormatPosition(loc),
             {'text': u'§a' + dimName[str(loc['dim'])] + u'§r'}
             ])
-        server.tell(info.player, locToStr(loc).encode('utf-8'))
         count = count + 1
     server.tell(info.player, '共有 §a' + str(count) + ' 个路标')
 
