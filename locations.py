@@ -50,7 +50,7 @@ def jsonFormatPosition(loc):
     }
 
 def tellComplexed(selector, content):
-    server.execute('tellraw ' + selector + json.dumps(content), ensure_ascii=False, encoding='utf-8')
+    server.execute('tellraw ' + selector + ' ' + json.dumps(content, ensure_ascii=False, encoding='utf-8'))
 
 def posConvert(loc, dim):
     if dim == loc['dim'] or loc['dim'] == 1:
