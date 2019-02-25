@@ -89,7 +89,7 @@ def add(server, info):
     tellComplexed('@a', [
         {'text': u'添加了路标 ' + newLoc['name'] + ' '}, 
         jsonFormatPosition(newLoc),
-        {'text': u'§a' + dimName(str(newLoc['dim'])) + u'§r'}
+        {'text': u'§a' + dimName[str(newLoc['dim'])] + u'§r'}
         ])
     
 def addHere(server, info):
@@ -103,7 +103,7 @@ def delete(server, info):
             tellComplexed('@a', [
                 {'text': info.player + u' 删除了路标 ' + loc['name'] + ' '},
                 jsonFormatPosition(loc),
-                {'text': u'§a' + dimName(str(newLoc['loc'])) + u'§r'}
+                {'text': u'§a' + dimName[str(newLoc['loc'])] + u'§r'}
                 ])
             return
     server.tell(info.player, '§c找不到名称匹配的路标，请使用§r !!loc §c查看所有路标！§r')
@@ -117,7 +117,7 @@ def get(server, info):
             tellComplexed(info.player, [
                 {'text': highlight(loc['name'],kwrd)},
                 jsonFormatPosition(loc),
-                {'text': u'§a' + dimName(str(newLoc['loc'])) + u'§r'}
+                {'text': u'§a' + dimName[str(newLoc['loc'])] + u'§r'}
                 ])
             count = count + 1
     if count == 0:
@@ -131,7 +131,7 @@ def getAll(server, info):
         tellComplexed(info.player, [
             {'text': loc['name']},
             jsonFormatPosition(loc),
-            {'text': u'§a' + dimName(str(newLoc['loc'])) + u'§r'}
+            {'text': u'§a' + dimName[str(newLoc['loc'])] + u'§r'}
             ])
         server.tell(info.player, locToStr(loc).encode('utf-8'))
         count = count + 1
