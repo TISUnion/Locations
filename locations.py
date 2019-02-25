@@ -42,8 +42,15 @@ except:
 
 dimName = {'0': u'主世界', '1': u'末地', '-1': u'地狱'}
 
-def locToStr(loc):
-    return loc['name'] + u'§a[' + str(loc['pos']['x']) + u', ' + str(loc['pos']['y']) + u', ' + str(loc['pos']['z']) + u'] ' + dimName[str(loc['dim'])] + u'§r'
+def jsonFormatPosition(loc):
+    return {
+        'text': u'§a[' + str(loc['pos']['x']) + u', ' + str(loc['pos']['y']) + u', ' + str(loc['pos']['z']) + u']§r ', 
+        'clickEvent': {'action': 'run_command', 'value': '/tp @p ' + str(loc['pos']['x']) + ' ' + str(loc['pos']['y']) + ' ' + str(loc['pos']['z'])}, 
+        'hoverEvent': {'action': 'show_text',   'value': u'点击以传送到坐标处'}
+    }
+
+def tellComplexed(selector, content):
+    server.execute('tellraw ' + selector + json.dumps(content), ensure_ascii=False, encoding='utf-8')
 
 def posConvert(loc, dim):
     if dim == loc['dim'] or loc['dim'] == 1:
@@ -79,7 +86,11 @@ def add(server, info):
             return
     newLoc = {'name': args[2], 'pos': {'x': int(args[3]), 'y': int(args[4]), 'z': int(args[5])}, 'dim': int(args[6])}
     locations.append(newLoc)
-    server.say(info.player + ' 添加了路标 ' + locToStr(newLoc).encode('utf-8'))
+    tellComplexed('@a', [
+        {'text': u'添加了路标 ' + newLoc['name'] + ' '}, 
+        jsonFormatPosition(newLoc),
+        {'text': u'§a' + dimName(str(newLoc['dim'])) + u'§r'}
+        ])
     
 def addHere(server, info):
     pass
@@ -89,7 +100,11 @@ def delete(server, info):
     for loc in locations:
         if args[2] == loc['name']:
             locations.remove(loc)
-            server.say(info.player + ' 删除了路标 ' + locToStr(loc).encode('utf-8'))
+            tellComplexed('@a', [
+                {'text': info.player + u' 删除了路标 ' + loc['name'] + ' '},
+                jsonFormatPosition(loc),
+                {'text': u'§a' + dimName(str(newLoc['loc'])) + u'§r'}
+                ])
             return
     server.tell(info.player, '§c找不到名称匹配的路标，请使用§r !!loc §c查看所有路标！§r')
 
@@ -99,7 +114,11 @@ def get(server, info):
     count = 0
     for loc in locations:
         if loc['name'].find(kwrd) > -1:
-            server.tell(info.player, highlight(locToStr(loc), kwrd).encode('utf-8'))
+            tellComplexed(info.player, [
+                {'text': highlight(loc['name'],kwrd)},
+                jsonFormatPosition(loc),
+                {'text': u'§a' + dimName(str(newLoc['loc'])) + u'§r'}
+                ])
             count = count + 1
     if count == 0:
         server.tell(info.player, '§c找不到名称匹配的路标，请使用§r !!loc §c查看所有路标！§r')
@@ -109,6 +128,11 @@ def get(server, info):
 def getAll(server, info):
     count = 0
     for loc in locations:
+        tellComplexed(info.player, [
+            {'text': loc['name']},
+            jsonFormatPosition(loc),
+            {'text': u'§a' + dimName(str(newLoc['loc'])) + u'§r'}
+            ])
         server.tell(info.player, locToStr(loc).encode('utf-8'))
         count = count + 1
     server.tell(info.player, '共有 §a' + str(count) + ' 个路标')
