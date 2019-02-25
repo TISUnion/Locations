@@ -49,7 +49,7 @@ def jsonFormatPosition(loc):
         'hoverEvent': {'action': 'show_text',   'value': u'点击以传送到坐标处'}
     }
 
-def tellComplexed(selector, content):
+def tellComplexed(server, selector, content):
     server.execute('tellraw ' + selector + ' ' + json.dumps(content, ensure_ascii=False, encoding='utf-8'))
 
 def posConvert(loc, dim):
@@ -86,7 +86,7 @@ def add(server, info):
             return
     newLoc = {'name': args[2], 'pos': {'x': int(args[3]), 'y': int(args[4]), 'z': int(args[5])}, 'dim': int(args[6])}
     locations.append(newLoc)
-    tellComplexed('@a', [
+    tellComplexed(server, '@a', [
         {'text': u'添加了路标 ' + newLoc['name'] + ' '}, 
         jsonFormatPosition(newLoc),
         {'text': u'§a' + dimName[str(newLoc['dim'])] + u'§r'}
@@ -100,7 +100,7 @@ def delete(server, info):
     for loc in locations:
         if args[2] == loc['name']:
             locations.remove(loc)
-            tellComplexed('@a', [
+            tellComplexed(server, '@a', [
                 {'text': info.player + u' 删除了路标 ' + loc['name'] + ' '},
                 jsonFormatPosition(loc),
                 {'text': u'§a' + dimName[str(loc['dim'])] + u'§r'}
@@ -114,7 +114,7 @@ def get(server, info):
     count = 0
     for loc in locations:
         if loc['name'].find(kwrd) > -1:
-            tellComplexed(info.player, [
+            tellComplexed(server, info.player, [
                 {'text': highlight(loc['name'],kwrd)},
                 jsonFormatPosition(loc),
                 {'text': u'§a' + dimName[str(loc['dim'])] + u'§r'}
@@ -128,7 +128,7 @@ def get(server, info):
 def getAll(server, info):
     count = 0
     for loc in locations:
-        tellComplexed(info.player, [
+        tellComplexed(server, info.player, [
             {'text': loc['name']},
             jsonFormatPosition(loc),
             {'text': u'§a' + dimName[str(loc['dim'])] + u'§r'}
