@@ -16,3 +16,5 @@ Set waypoints and search them!
 * !!loc del <name> - delete waypoint, match whole word only
 * !!loc <keyword> - returns all the waypoints containing <keyword>
 * !!loc - list all the waypoints
+
+You can click on any coordinate to teleport
