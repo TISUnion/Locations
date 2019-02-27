@@ -95,8 +95,8 @@ def add(server, info):
         ])
     
 def addHere(server, info):
-	args = unicode(info.content, encoding='utf-8').split(' ')
-	for loc in locations:
+    args = unicode(info.content, encoding='utf-8').split(' ')
+    for loc in locations:
         if args[2] == loc['name']:
             server.tell(info.player, '§c已存在同名的路标§r')
             server.tell(info.player, locToStr(loc).encode('utf-8'))
