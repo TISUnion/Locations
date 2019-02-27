@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+from os import path
 import traceback
 import codecs
 import json
@@ -30,17 +31,12 @@ tips:为方便搜索，可以加入别名，尽量使用全称，如“僵尸猪
 
 locations = []
 
-try:
+if path.exists('locations.json'):
     with codecs.open('locations.json', 'r', encoding='utf-8') as jfile:
         locations = json.load(jfile)
-except IOError:
+else:
     with codecs.open('locations.json', 'w', encoding='utf-8') as jfile:
-        jfile.write('')
-except:
-    lines = traceback.format_exc().splitlines()
-    for l in lines:
-        server.say(l)
-    
+        jfile.write('[]')
 
 dimName = {'0': u'主世界', '1': u'末地', '-1': u'地狱'}
 
@@ -102,7 +98,7 @@ def addHere(server, info):
             server.tell(info.player, locToStr(loc).encode('utf-8'))
             return
     player_info = PlayerInfoAPI.getPlayerInfo(server, info.player)
-    newLoc = {'name': args[2], 'pos': {'x': player_info['Pos'][0], 'y': player_info['Pos'][1], 'z': player_info['Pos'][2], 'dim': player_info['Dimension']}
+    newLoc = {'name': args[2], 'pos': {'x': player_info['Pos'][0], 'y': player_info['Pos'][1], 'z': player_info['Pos'][2], 'dim': player_info['Dimension']}}
     locations.append(newLoc)
     tellComplexed(server, '@a', [
         {'text': u'添加了路标 ' + newLoc['name'] + ' '}, 
