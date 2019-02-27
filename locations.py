@@ -4,6 +4,8 @@ import re
 import traceback
 import codecs
 import json
+from imp import load_source
+PlayerInfoAPI = load_source('PlayerInfoAPI','./plugins/PlayerInfoAPI.py')
 
 '''
 MC一般指令染色规则
@@ -93,7 +95,20 @@ def add(server, info):
         ])
     
 def addHere(server, info):
-    pass
+	args = unicode(info.content, encoding='utf-8').split(' ')
+	for loc in locations:
+        if args[2] == loc['name']:
+            server.tell(info.player, '§c已存在同名的路标§r')
+            server.tell(info.player, locToStr(loc).encode('utf-8'))
+            return
+    player_info = PlayerInfoAPI.getPlayerInfo(server, info.player)
+    newLoc = {'name': args[2], 'pos': {'x': player_info['Pos'][0], 'y': player_info['Pos'][1], 'z': player_info['Pos'][2], 'dim': player_info['Dimension']}
+    locations.append(newLoc)
+    tellComplexed(server, '@a', [
+        {'text': u'添加了路标 ' + newLoc['name'] + ' '}, 
+        jsonFormatPosition(newLoc),
+        {'text': u'§a' + dimName[str(newLoc['dim'])] + u'§r'}
+        ])
 
 def delete(server, info):
     args = unicode(info.content, encoding='utf-8').split(' ')
