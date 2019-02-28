@@ -109,9 +109,9 @@ def addHere(server, info):
     newLoc = {
     'name': args[2], 
     'pos': {
-        'x': player_info['Pos'][0],
-        'y': player_info['Pos'][1],
-        'z': player_info['Pos'][2]
+        'x': int(player_info['Pos'][0]),
+        'y': int(player_info['Pos'][1]),
+        'z': int(player_info['Pos'][2])
     },
     'dim': player_info['Dimension']
     }
