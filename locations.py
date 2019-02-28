@@ -151,20 +151,20 @@ def onServerInfo(server, info):
   if info.isPlayer == 1:
     if info.content.startswith('!!loc'):
       try:
-        if re.match("^!!loc help\s*$",info.content):
+        if re.match("^!!loc help$",info.content):
           printHelp(server, info)
-        elif re.match("^!!loc add \S+ -?\d+ -?\d+ -?\d+ (-1|0|1)\s*$",info.content):
+        elif re.match("^!!loc add \S+ -?\d+ -?\d+ -?\d+ (-1|0|1)$",info.content):
           add(server, info)
           update()
-        elif re.match("^!!loc add here\s*$",info.content):
+        elif re.match("^!!loc add \S+ here$",info.content):
           addHere(server, info)
           update()
-        elif re.match("^!!loc del \S+\s*$",info.content):
+        elif re.match("^!!loc del \S+$",info.content):
           delete(server, info)
           update()
-        elif re.match("^!!loc \S+\s*$",info.content):
+        elif re.match("^!!loc \S+$",info.content):
           get(server, info)
-        elif re.match("^!!loc\s*$",info.content):
+        elif re.match("^!!loc$",info.content):
           getAll(server, info)
         else:
           server.tell(info.player, '§c输入无效，使用§r !!loc help §c查看帮助信息§r')
