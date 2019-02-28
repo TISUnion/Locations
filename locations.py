@@ -82,7 +82,15 @@ def add(server, info):
             server.tell(info.player, '§c已存在同名的路标§r')
             server.tell(info.player, locToStr(loc).encode('utf-8'))
             return
-    newLoc = {'name': args[2], 'pos': {'x': int(args[3]), 'y': int(args[4]), 'z': int(args[5])}, 'dim': int(args[6])}
+    newLoc = {
+    'name': args[2],
+    'pos': {
+        'x': int(args[3]),
+        'y': int(args[4]),
+        'z': int(args[5])
+    },
+    'dim': int(args[6])
+    }
     locations.append(newLoc)
     tellComplexed(server, '@a', [
         {'text': u'添加了路标 ' + newLoc['name'] + ' '}, 
@@ -98,7 +106,15 @@ def addHere(server, info):
             server.tell(info.player, locToStr(loc).encode('utf-8'))
             return
     player_info = PlayerInfoAPI.getPlayerInfo(server, info.player)
-    newLoc = {'name': args[2], 'pos': {'x': player_info['Pos'][0], 'y': player_info['Pos'][1], 'z': player_info['Pos'][2], 'dim': player_info['Dimension']}}
+    newLoc = {
+    'name': args[2], 
+    'pos': {
+        'x': player_info['Pos'][0],
+        'y': player_info['Pos'][1],
+        'z': player_info['Pos'][2]
+    },
+    'dim': player_info['Dimension']
+    }
     locations.append(newLoc)
     tellComplexed(server, '@a', [
         {'text': u'添加了路标 ' + newLoc['name'] + ' '}, 
